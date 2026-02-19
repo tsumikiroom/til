@@ -1,6 +1,6 @@
 # プロジェクションマッピング × 展示空間 リファレンス集
 
-三菱電機神戸製作所ショールーム「MEETS」の監視制御システム体験コーナー（模型+プロジェクション）企画用リファレンス。
+展示空間向けプロジェクションマッピングの企画用リファレンス。
 6分類にまとめてみる。
 ---
 
@@ -10,7 +10,7 @@
 
 ### Panasonic CES Diorama（XiteLabs）
 - **URL**: [https://xitelabs.com/portfolio/panasonic-ces-diorama/](https://xitelabs.com/portfolio/panasonic-ces-diorama/)
-- **概要**: PanasonicがCESで展示したスマートシティのジオラマ模型へのプロジェクションマッピング。モビリティ・インフラ・住居など都市の各コンポーネントをミニチュア模型上で可視化。三菱電機の監視制御展示と直接比較できる王道案件。
+- **概要**: PanasonicがCESで展示したスマートシティのジオラマ模型へのプロジェクションマッピング。モビリティ・インフラ・住居など都市の各コンポーネントをミニチュア模型上で可視化。ショールーム展示と直接比較できる王道案件。
 
 ### Moment Factory - Projection Mapping Portfolio
 - **URL**: [https://momentfactory.com/collections/projection-mapping](https://momentfactory.com/collections/projection-mapping)
@@ -26,7 +26,7 @@
 
 ---
 
-## ② データ可視化型（知的・三菱電機向き）
+## ② データ可視化型（知的・精緻）
 
 **特徴**：数値・流量・電力データが光として流れ、平時は静かで異常は微細に滲む。「常時監視しているが平常時は穏やか」という監視制御の本質を体現できる。「余白の起点」コンセプトとも整合する。
 
@@ -46,11 +46,15 @@
 - **URL**: [https://magazine.artland.com/refik-anadol/](https://magazine.artland.com/refik-anadol/)
 - **概要**: ストックホルムの美術館で写真アーカイブをAIに学習させてリアルタイム映像化したサイトスペシフィック作品。場所の記憶・歴史をデータとして扱う発想が参考になる。
 
+### MESO Digital Interiors - DVAG Data-Driven Map
+- **URL**: [https://meso.design/en/projects/dvag-data-driven-map-for-financial-brand-museum](https://meso.design/en/projects/dvag-data-driven-map-for-financial-brand-museum)
+- **概要**: ドイツ・マルブルクのDVAG本社（金融ブランドミュージアム）向けインスタレーション。アクリルバーを格子状に配置し、個別制御のLEDモジュールでドイツ各地域の営業所数データを光の色で可視化。物理的な構造体とデータを直接結びつけた立体的なデータビジュアライゼーション。3つのインタラクティブ端末から詳細データも参照可能。TOKYO PROTOTYPE 2025で参照。
+
 ---
 
 ## ③ 兆候検知型（高度・思想寄り）
 
-**特徴**：大きな事故は起きない。微細な「揺らぎ」が可視化されAIが静かに収束させる演出。三菱電機の「未然防止」という本質価値と直結。エンタメではなくプロフェッショナル感が出る上級者向け案。
+**特徴**：大きな事故は起きない。微細な「揺らぎ」が可視化されAIが静かに収束させる演出。「未然防止」という本質価値と直結。エンタメではなくプロフェッショナル感が出る上級者向け案。
 
 ### Ryoji Ikeda - 作品アーカイブ
 - **URL**: [https://www.ryojiikeda.com/archive/works/](https://www.ryojiikeda.com/archive/works/)
@@ -80,7 +84,7 @@
 
 ### Siemens - 製造可視化ソリューション
 - **URL**: [https://plm.sw.siemens.com/en-US/tecnomatix/advanced-manufacturing-visualization/](https://plm.sw.siemens.com/en-US/tecnomatix/advanced-manufacturing-visualization/)
-- **概要**: Siemensの製造プロセスをリアルタイム3D環境でシミュレートするシステム。工場・インフラの透過モデル表現の技術的参考。三菱電機の工場・制御システムとスケール感が近い。
+- **概要**: Siemensの製造プロセスをリアルタイム3D環境でシミュレートするシステム。工場・インフラの透過モデル表現の技術的参考。製造・制御システムの展示とスケール感が近い。
 
 ### 10 Immersive Examples of Projection Mapping（Parametric Architecture）
 - **URL**: [https://parametric-architecture.com/10-examples-of-projection-mapping/](https://parametric-architecture.com/10-examples-of-projection-mapping/)
@@ -153,5 +157,40 @@
 
 ---
 
-*三菱電機神戸製作所 MEETS ショールーム改修企画用。2026年2月収集。*
+*ショールーム展示企画用。2026年2月収集。*
+
+---
+
+## TOKYO PROTOTYPE 2025 参加作品
+
+*2025年開催のTOKYO PROTOTYPE（虎ノ門ヒルズ）の参加作品リスト。*
+
+| 出展者 | 作品名 | 概要 |
+|---|---|---|
+| 池坊 / BAUMX / enigma | Plurality of Life — 純粋な命と、多様な命 | 華道とデザインが融合した命の多様性を探る展示 |
+| Abstract Engine | Enactive | 身体性とテクノロジーの相互作用をテーマにした作品 |
+| Abstract Engine | ShadowUp | 光と影を用いた体験型のアート |
+| 慶應義塾大学大学院 KMD Embodied Media | Brain Body Jockey Project & The Third Between Us | 脳と身体、そして他者との境界を拡張する実験プロジェクト |
+| 東京大学 DLX Design Lab | Designing with Neurons | 神経細胞（ニューロン）を用いたデザインの可能性 |
+| 東京大学 xlab（筧康明研究室） | Material Experience Design | 素材の体験を再定義するプロトタイプ |
+| bit.studio | FLOCK OF | 群れや集合体の動きを表現したデジタルインスタレーション |
+| 森田 崇文 | MorphFlux | 形態の変化や流れを捉えた作品 |
+| GOOGLE HARDWARE DESIGN STUDIO | Prototyping — 動きの中の詩。2026 | Googleのハードウェアデザインによる未来の表現 |
+| Spline Design Hub | 螺旋の律動 | 螺旋構造を用いたリズムや動きの探求 |
+| 藤堂高行 | 鎖に繋がれた犬のダイナミクス | 物理的な制約と動きの動力をテーマにした展示 |
+| D2C IMG SRC STUDIO × SoVeC | IDEATIONS Vol.4 Satellite | デジタルクリエイティブによるアイデアの視覚化 |
+| 乃村工藝社 未来創造研究所 NOMLAB | 空間の未来をプロトタイプする | 次世代の空間体験やディスプレイの実験 |
+| HAKUTEN | 100+ prototypes | 膨大な数のプロトタイプを通じた創造プロセスの展示 |
+| 株式会社ミライセンス | ユニバーサルハプティクスデバイス "echorb" | 触覚技術（ハプティクス）を用いた新しいデバイス体験 |
+| mud Inc. | PROMPT RACING | AI（プロンプト）を活用した新しい形のレース体験 |
+| 東京大学五十嵐研 / ソフトバンク / Takram | Postrace | 走行や移動の未来を捉え直すプロジェクト |
+| DNP / THRUSTER / 5BLOCKS | リアルタイムに3D変換 ＆ デジタル職業体験 | 3D技術を活用した職業体験のプロトタイプ |
+| I.CEBERG \| WOW | 氷塊のなかに、怪物を求める。 | 氷をモチーフにした視覚的・空間的な物語体験 |
+| Konel Inc. / NTT DX Partner | ZZZN SLEEP APPAREL SYSTEM | 睡眠とアパレル、テクノロジーを掛け合わせたシステム |
+| 130 onethirty \| MagnaRecta.inc | Core Shell Lounge | 3Dプリンティング等を用いた新しい家具・空間造形 |
+| IE3 / TORIHADA | desync | 同期と非同期をテーマにしたインタラクティブな体験 |
+| GOO CHOKI PAR | 3 AND PROGRAM / MOTTO PROTOTYPE | 独創的なグラフィックとデザインの実験 |
+| 株式会社ZOZO NEXT | Alternative Crafts produced by ZOZO NEXT | テクノロジーを融合させた次世代のクラフト（工芸） |
+| PHIARO CORPORATION | Digital–Real Integrated Prototyping | デジタルとリアルの統合による造形プロトタイプ |
+| TASKO x Abstract Engine | Tug of Memories | 記憶をテーマにした、物理的な仕掛けを持つ作品 |
 
