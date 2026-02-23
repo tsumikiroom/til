@@ -1,5 +1,37 @@
 # Claude Code インストール & GitHub連携
 
+## ターミナルの種類（Windows）
+
+Windowsには複数のターミナル環境があり、それぞれ役割が異なる。
+
+| 名前 | 概要 | 用途 |
+|------|------|------|
+| **コマンドプロンプト（CMD）** | 最も古いWindowsのシェル。`.bat`ファイルを動かす用途が主 | レガシーなWindows操作 |
+| **PowerShell** | Windowsに標準搭載された高機能シェル。スクリプトや自動化に強い | Windows管理・自動化 |
+| **Git Bash** | Gitインストール時に付属するUnix互換シェル。`ls`や`cat`などが使える | Git操作・Unix系コマンド |
+| **Windows Terminal** | 上記を統合して管理できるタブ型ターミナルアプリ | 複数シェルをまとめて使う |
+
+### Node.js との関係
+
+**Node.js はターミナルではなく、JavaScriptの実行環境。**
+
+- ブラウザ外でJavaScriptを動かすためのランタイム
+- `npm`（パッケージマネージャー）が同梱されており、`claude`や`gh`などのCLIツールをインストールするために使う
+- Claude Codeのインストールには `npm install -g` を使うため、Node.jsが必須
+
+```
+Node.js（実行環境）
+  └── npm（パッケージ管理）
+        └── claude, gh などのCLIツールをインストール
+```
+
+### Claude Codeを動かすおすすめ環境
+
+**PowerShell または Git Bash** を使うのが無難。
+CMDでも動作するが、Unix系のコマンドが使えないため不便な場面がある。
+
+---
+
 ## 前提条件
 
 ### Node.js 18以上
