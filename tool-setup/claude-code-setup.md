@@ -2,13 +2,38 @@
 
 ## 前提条件
 
-Node.js 18以上が必要。
+### Node.js 18以上
 
 ```bash
 node --version
 ```
 
 インストールされていない場合は https://nodejs.org からダウンロード。
+
+### Git
+
+```bash
+git --version
+```
+
+「command not found」や「'git' は認識されていません」と表示された場合はインストールが必要。
+
+**Windows:**
+
+```bash
+winget install --id Git.Git
+```
+
+または https://git-scm.com からダウンロード。
+
+インストール後、ターミナルを再起動して再確認。
+
+**初期設定（初回のみ）:**
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+```
 
 ---
 
