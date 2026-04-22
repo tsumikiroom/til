@@ -14,13 +14,14 @@ class FramePipeline:
         self.watch_dir = os.path.join(output_dir, "watch")
         self.fps = fps
         self.interval_frames = interval_frames
+        self.client = replicate.Client(api_token=os.environ.get("REPLICATE_API_TOKEN"))
 
         Path(output_dir).mkdir(exist_ok=True)
         Path(self.watch_dir).mkdir(exist_ok=True)
 
     def _generate(self, input_path, prompt):
         with open(input_path, "rb") as img_file:
-            output = replicate.run(
+            output = self.client.run(
                 "black-forest-labs/flux-dev",
                 input={"image": img_file, "prompt": prompt, "strength": 0.8},
             )

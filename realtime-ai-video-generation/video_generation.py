@@ -27,8 +27,8 @@ class VideoGenerator:
             print(f"Video created: {output_path}")
             return output_path
         else:
-            print(f"ffmpeg error: {result.stderr}")
-            return None
+            print(f"ffmpeg glob not supported, falling back to OpenCV...")
+            return self.create_video_with_opencv(fps=fps)
 
     def create_video_with_opencv(self, output_filename="output.mp4", fps=15):
         frame_files = sorted(
