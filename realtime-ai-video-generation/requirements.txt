@@ -1,23 +1,10 @@
-# リアルタイムAI動画生成 - 依存ライブラリ（クラウド推論版）
-
-# コア画像処理
 opencv-python==4.8.1.78
 Pillow==10.1.0
 numpy==1.24.3
-
-# API クライアント
 replicate==0.25.1
 requests==2.31.0
-
-# 環境変数管理
 python-dotenv==1.0.0
-
-# 動画生成（ffmpeg-python は ffmpeg のラッパー）
-ffmpeg-python==0.2.1
-
-# 便利ユーティリティ
+ffmpeg-python==0.2.0
 tqdm==4.66.1
-
-# 開発用
 pytest==7.4.3
 black==23.12.0
