@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Quadtree Mosaic (midpoint sampling)</title>
+  <style>
+    html, body { margin: 0; padding: 0; background: #1a1a1a; color: #eee; font-family: system-ui, sans-serif; }
+    body { display: flex; }
+    #canvas-wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 16px; }
+    #controls { width: 280px; padding: 16px; background: #222; border-left: 1px solid #333; box-sizing: border-box; }
+    #controls h2 { margin: 0 0 12px; font-size: 14px; letter-spacing: 0.04em; color: #aaa; text-transform: uppercase; }
+    #controls .row { margin-bottom: 12px; font-size: 13px; }
+    #controls label { display: block; margin-bottom: 4px; color: #ccc; }
+    #controls .value { color: #fff; font-variant-numeric: tabular-nums; }
+    #controls input[type=range] { width: 100%; }
+    #controls button { width: 100%; padding: 8px; margin-top: 6px; background: #333; color: #fff; border: 1px solid #444; cursor: pointer; }
+    #controls button:hover { background: #444; }
+    #stats { margin-top: 16px; padding: 8px; background: #1a1a1a; border: 1px solid #333; font-size: 12px; line-height: 1.5; }
+    #hint { margin-top: 12px; font-size: 11px; color: #888; line-height: 1.5; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/p5@2.2.0/lib/p5.js"></script>
+  <script src="quadtree.js"></script>
+</head>
+<body>
+  <div id="canvas-wrap"></div>
+  <div id="controls">
+    <h2>Quadtree Mosaic</h2>
+    <!-- p5 sketch.js injects controls here -->
+  </div>
+  <script src="sketch.js"></script>
+</body>
+</html>
