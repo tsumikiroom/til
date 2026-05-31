@@ -44,7 +44,7 @@ in2_noise (inTOP: ノイズ) ─────────────────
 
 ## パラメータ一覧
 
-GLSL TOP の **Vectors ページ** に登録された uniform。
+### Vectors ページ
 
 | Uniform | 意味 | 推奨範囲 | デフォルト |
 |---|---|---|---|
@@ -54,8 +54,13 @@ GLSL TOP の **Vectors ページ** に登録された uniform。
 | `maxLevel` | 最大ブロック = 2^maxLevel px | 1〜10 | 7 (=128px) |
 | `varianceSamples` | (v1の名残、v2では未使用) | – | 4 (無視) |
 | `showBlocks` | ブロック境界線の太さ (px)。0で線なし | 0〜10 | 0 |
-| `lineColor` | 境界線の色 (RGB) | 0〜1 | (0,0,0) 黒 |
 | `whiteOut` | 1にするとベース画像を白にして線だけ残す | 0 or 1 | 0 |
+
+### Colors ページ
+
+| Uniform | 意味 | デフォルト |
+|---|---|---|
+| `lineColor` | 境界線の色 (RGB)。TDの色ピッカーで指定 | (0,0,0) 黒 |
 
 ### ハイブリッド判定式
 
