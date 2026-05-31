@@ -42,25 +42,30 @@ in2_noise (inTOP: ノイズ) ─────────────────
 - `noise_mask.par.type = simplex3d`（GPU実装、Sparseは超重い）
 - `noise_mask` は 512×512 程度で十分（マスク用途）
 
-## パラメータ一覧
+## パラメータ操作 (親COMP `Quadtree` のカスタムページ)
 
-### Vectors ページ
+`Quadtree` baseCOMP のカスタムページ `Quadtree` に以下が並ぶ。
+これらは内部の `glsl_quadtree` の uniform に **bind** されており、
+親パラメータを動かせば即時シェーダーに反映される。
 
-| Uniform | 意味 | 推奨範囲 | デフォルト |
-|---|---|---|---|
-| `baseThreshold` | 分散しきい値の基準値。小さいほど細かい | 0.005〜0.2 | 0.04 |
-| `noiseInfluence` | ノイズマスクの効き具合。0=ノイズ無視、1=完全変調 | 0〜1 | 1.0 |
-| `minLevel` | 最小ブロック = 2^minLevel px | 0〜6 | 1 (=2px) |
-| `maxLevel` | 最大ブロック = 2^maxLevel px | 1〜10 | 7 (=128px) |
-| `varianceSamples` | (v1の名残、v2では未使用) | – | 4 (無視) |
-| `showBlocks` | ブロック境界線の太さ (px)。0で線なし | 0〜10 | 0 |
-| `whiteOut` | 1にするとベース画像を白にして線だけ残す | 0 or 1 | 0 |
+| 親カスタムパラメータ | 型 | 範囲 | デフォルト | 効果 |
+|---|---|---|---|---|
+| `Base Threshold` | Float | 0〜0.2 | 0.04 | 分散しきい値。小→細かい |
+| `Noise Influence` | Float | 0〜1 | 1.0 | ノイズで閾値を変調する強さ |
+| `Min Level (2^L px)` | Int | 0〜6 | 1 | 最小ブロック = 2^L px |
+| `Max Level (2^L px)` | Int | 1〜11 | 7 | 最大ブロック = 2^L px |
+| `Show Blocks (line width px)` | Float | 0〜10 | 0 | 境界線の太さ。0で線無し |
+| `White Out (lines only)` | Toggle | – | OFF | ON でベース画像を白にして線だけ表示 |
+| `Line Color` | RGB | – | (0,0,0) | 境界線の色 |
 
-### Colors ページ
+### 内部の uniform (参考)
 
-| Uniform | 意味 | デフォルト |
-|---|---|---|
-| `lineColor` | 境界線の色 (RGB)。TDの色ピッカーで指定 | (0,0,0) 黒 |
+メインシェーダー `glsl_quadtree` の uniform 配置:
+
+- **Vectors ページ**: baseThreshold / noiseInfluence / minLevel / maxLevel / varianceSamples (未使用) / showBlocks / whiteOut
+- **Colors ページ**: lineColor
+
+これらは親COMPの bind 経由で操作するため、通常は直接触らない。
 
 ### ハイブリッド判定式
 
