@@ -67,17 +67,36 @@ in2_noise (inTOP: ノイズ) ─────────────────
 
 これらは親COMPの bind 経由で操作するため、通常は直接触らない。
 
-### ハイブリッド判定式
+### ハイブリッド判定 (v3)
 
+ノイズ画像と画像分散から、それぞれ独立に「希望分割レベル」を計算し、
+**より細かい方 (= min)** を採用する。
+
+**noise 側 (純粋にサイズを規定):**
 ```
-threshLocal = baseThreshold * mix(1, max(0, 1 - noise), noiseInfluence)
-分散 > threshLocal なら分割する
+effNoise   = noise * noiseInfluence
+noiseLevel = mix(maxLevel, minLevel, effNoise)
+```
+- noise=0 → noiseLevel = maxLevel (大ブロック)
+- noise=1 → noiseLevel = minLevel (細ブロック)
+- noiseInfluence=0 で noise を完全無視
+
+**画像分散側 (従来の閾値判定):**
+```
+maxLevel から降下し、ブロック内分散 > baseThreshold なら 1段細かく。
+分散が閾値以下になった所で停止 (= varianceLevel)。
 ```
 
-例:
-- `baseThreshold=0.04, noiseInfluence=1, noise=0` → `threshLocal=0.04`（大ブロック寄り）
-- `baseThreshold=0.04, noiseInfluence=1, noise=1` → `threshLocal=0`（minLevel まで強制細分割）
-- `baseThreshold=0.04, noiseInfluence=0, noise=任意` → `threshLocal=0.04`（ノイズ無視）
+**最終:**
+```
+chosenLevel = min(noiseLevel, varianceLevel)
+```
+
+例 (`baseThreshold=0.04, noiseInfluence=1, maxLevel=11, minLevel=1`):
+- noise=0、滑らかな画像: noiseLevel=11, varianceLevel=11 → 大ブロック
+- noise=1、滑らかな画像: noiseLevel=1, varianceLevel=11 → ノイズ側で細かく (1px)
+- noise=0、ディテール画像: noiseLevel=11, varianceLevel=4 → ディテール側で細かく
+- noise=1、ディテール画像: noiseLevel=1, varianceLevel=2 → 強い方で細かく (1px)
 
 ### 線描画モード
 
@@ -137,23 +156,29 @@ threshLocal = baseThreshold * mix(1, max(0, 1 - noise), noiseInfluence)
 
 ```text
 PER PIXEL:
+  # --- noise 側: ピクセル位置の noise からサイズ規定 ---
+  noise      = sample noise_mask at uv (pixel-level, not block-level)
+  effNoise   = clamp(noise * noiseInfluence, 0, 1)
+  noiseLevel = round(mix(maxLevel, minLevel, effNoise))
+
+  # --- variance 側: 従来の降下ループ ---
+  varianceLevel = minLevel  # fallback
   for L in [maxLevel .. minLevel+1]:
-    block_size      = 2^L
-    block_origin    = floor(pixelCoord / block_size) * block_size
-    block_center    = block_origin + block_size/2
-    noise           = sample noise_mask at block_center
-    threshold_local = baseThreshold * (1 - noise * noiseInfluence)
-
-    # mipmap level L のRGBA = (mean(R), mean(G), mean(B), mean((R²+G²+B²)/3))
-    stats     = textureLod(prep_variance, block_center, L)
-    variance  = stats.a - dot(stats.rgb, stats.rgb) / 3
-
-    if variance > threshold_local:
-      chosen_level = L - 1   # 分割する → 1段細かい
+    block_size   = 2^L
+    block_origin = floor(pixelCoord / block_size) * block_size
+    block_center = (block_origin + min(block_origin+block_size, res)) / 2
+    stats        = textureLod(prep_variance, block_center, L)
+    variance     = stats.a - dot(stats.rgb, stats.rgb) / 3
+    if variance > baseThreshold:
+      varianceLevel = L - 1   # 分割する
     else:
-      chosen_level = L       # ここで停止
+      varianceLevel = L
       break
 
+  # --- 採用 ---
+  chosen_level = min(noiseLevel, varianceLevel)
+
+  # --- 描画 ---
   midColor = source[block_center_of(2^chosen_level)]
   baseColor = whiteOut ? white : midColor
   if showBlocks > 0 and pixel near block edge within showBlocks pixels:
