@@ -1,0 +1,23 @@
+# TD auto-backup
+Backup/
+
+# TD numbered project versions (we only commit the canonical name)
+*.[0-9].toe
+*.[0-9][0-9].toe
+
+# Movie outputs from TD's Movie File Out TOP (potentially huge)
+movieout*.mov
+movieout*.mp4
+*.mov
+*.mp4
+
+# Debug screenshots used during development
+_debug/
+
+# Image assets (user-supplied, potentially copyrighted, often large)
+Image/*
+!Image/.gitkeep
+Movie/*
+!Movie/.gitkeep
+Chan/*
+!Chan/.gitkeep
