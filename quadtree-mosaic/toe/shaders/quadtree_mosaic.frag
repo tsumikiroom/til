@@ -47,11 +47,13 @@ void main() {
 
         float size     = exp2(float(L));
         vec2  originPx = floor(pxCoord / size) * size;
-        vec2  centerUV = (originPx + size * 0.5) / res;
+        // ブロックが画像端からはみ出る場合、中点が画像外を指して
+        // mipmap が undefined 値 (典型的には黒) を返す問題を防ぐ。
+        // 「ブロックと画像が重なる領域」の中央をサンプル位置にする。
+        vec2  endPx    = min(originPx + size, res);
+        vec2  centerUV = ((originPx + endPx) * 0.5) / res;
 
         // Mipmap level L はブロックサイズ 2^L に対応 (textureLod は LOD を float で取る)。
-        // ただしブロックは絶対座標で size=2^L にスナップされているため、
-        // mipmap level も同じ L を要求すればブロック整列したサンプルが得られる。
         float lod      = float(L);
 
         float noise     = textureLod(sTD2DInputs[1], centerUV, 0.0).r;
@@ -70,9 +72,11 @@ void main() {
     }
 
     // 中点サンプリングは元画像から直接 (mip 0)。
+    // ブロックが画像端からはみ出る場合は、ブロックと画像の重なり領域の中央。
     float size     = exp2(float(chosen));
     vec2  originPx = floor(pxCoord / size) * size;
-    vec2  centerUV = (originPx + size * 0.5) / res;
+    vec2  endPx    = min(originPx + size, res);
+    vec2  centerUV = ((originPx + endPx) * 0.5) / res;
     vec3  midColor = textureLod(sTD2DInputs[0], centerUV, 0.0).rgb;
 
     // ベース色: whiteOut が ON ならベース画像を白に置換。
