@@ -46,9 +46,14 @@ void main() {
     int lvlMax = clamp(int(maxLevel.x), lvlMin, 12);
 
     // --- 1. ノイズ画像から noiseLevel を計算 ---------------------------
-    // ノイズはこのピクセル位置 (UV) で読む。ブロック単位ではなくピクセル単位なので
-    // ノイズグラデーションそのものを反映できる。
-    float noise = textureLod(sTD2DInputs[1], uv, 0.0).r;
+    // ノイズは「最小ブロック」の中点で量子化して読む。ピクセル単位で読むと
+    // 同一ブロック内でも noiseLevel が変動し、ブロック境界がノイズ等高線に
+    // ずれて滲む。最小粒度で量子化すれば最終ブロック境界と必ず整合する。
+    float noiseSize     = exp2(float(lvlMin));
+    vec2  noiseOriginPx = floor(pxCoord / noiseSize) * noiseSize;
+    vec2  noiseEndPx    = min(noiseOriginPx + noiseSize, res);
+    vec2  noiseUV       = ((noiseOriginPx + noiseEndPx) * 0.5) / res;
+    float noise = textureLod(sTD2DInputs[1], noiseUV, 0.0).r;
     float effNoise = clamp(noise * noiseInfluence.x, 0.0, 1.0);
     // noise=0 → noiseLevel = lvlMax、noise=1 → noiseLevel = lvlMin
     int noiseLevel = int(floor(mix(float(lvlMax), float(lvlMin), effNoise) + 0.5));

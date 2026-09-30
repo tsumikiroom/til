@@ -5,8 +5,6 @@ import os
 import socket
 import threading
 import time
-import requests
-import replicate
 from pathlib import Path
 from PIL import Image
 
@@ -37,27 +35,47 @@ class TDController:
             return self._config.get(key, default)
 
 
+class LocalFluxGenerator:
+    MODEL_ID = "black-forest-labs/FLUX.1-dev"
+
+    def __init__(self):
+        import torch
+        from diffusers import FluxImg2ImgPipeline
+
+        print("Loading FLUX.1-dev model...")
+        self.pipe = FluxImg2ImgPipeline.from_pretrained(
+            self.MODEL_ID,
+            torch_dtype=torch.bfloat16,
+        )
+        # VRAMを節約: レイヤーを順次GPUに乗せる
+        self.pipe.enable_sequential_cpu_offload()
+        self.pipe.vae.enable_slicing()
+        self.pipe.vae.enable_tiling()
+        print("Model loaded.")
+
+    def generate(self, input_path, prompt, strength=0.8):
+        image = Image.open(input_path).convert("RGB")
+        result = self.pipe(
+            prompt=prompt,
+            image=image,
+            strength=strength,
+            num_inference_steps=28,
+            guidance_scale=3.5,
+        ).images[0]
+        return result
+
+
 class FramePipeline:
     def __init__(self, output_dir="output", fps=15, interval_frames=2, udp_port=9999):
         self.output_dir = output_dir
         self.watch_dir = os.path.join(output_dir, "watch")
         self.fps = fps
         self.interval_frames = interval_frames
-        self.client = replicate.Client(api_token=os.environ.get("REPLICATE_API_TOKEN"))
         self.td = TDController(port=udp_port)
+        self.generator = LocalFluxGenerator()
 
         Path(output_dir).mkdir(exist_ok=True)
         Path(self.watch_dir).mkdir(exist_ok=True)
-
-    def _generate(self, input_path, prompt):
-        with open(input_path, "rb") as img_file:
-            output = self.client.run(
-                "black-forest-labs/flux-dev",
-                input={"image": img_file, "prompt": prompt, "strength": 0.8},
-            )
-        url = output[0] if isinstance(output, list) else output
-        response = requests.get(url)
-        return Image.open(io.BytesIO(response.content))
 
     def _save(self, image, generated_count):
         watch_path = os.path.join(self.watch_dir, "current_frame.jpg")
@@ -89,7 +107,6 @@ class FramePipeline:
                     print(f"Finished after {duration_sec}s")
                     break
 
-                # TDからのパラメーターを反映
                 current_prompt = self.td.get('prompt', prompt)
                 current_interval = int(self.td.get('interval', self.interval_frames))
 
@@ -99,10 +116,11 @@ class FramePipeline:
                 if frame_count % current_interval == 0:
                     print(f"[frame {frame_count}] prompt='{current_prompt}' interval={current_interval}")
                     try:
-                        image = self._generate(input_path, current_prompt)
+                        t = time.time()
+                        image = self.generator.generate(input_path, current_prompt)
                         watch_path = self._save(image, generated_count)
                         generated_count += 1
-                        print(f"  -> Saved: {watch_path}")
+                        print(f"  -> Saved: {watch_path} ({time.time()-t:.1f}s)")
                     except Exception as e:
                         print(f"  Error: {e}")
 
